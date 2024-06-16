@@ -65,13 +65,13 @@ const ProfileComponent = () => {
                                         </div>
                                         <div className=' w-full flex flex-col p-4 gap-4'>
                                             <div className='w-full flex justify-between'>
-                                                <p className=' text-xl font-semibold'>{item.name}</p>
-                                                <p className=' text-xl font-semibold'>₹{item.price}</p>
+                                                <p className=' text-lg md:text-xl font-semibold'>{item.name}</p>
+                                                <p className=' text-lg md:text-xl font-semibold'>₹{item.price}</p>
                                             </div>
-                                            <div className=' w-[800px]'>
-                                                <p className=' font-medium text-gray-500'>{item.description}</p>
+                                            <div className=' w-full lg:w-[800px]'>
+                                                <p className=' text-sm md:text-base font-medium text-gray-500'>{item.description}</p>
                                             </div>
-                                            <div className=' flex items-center justify-between'>
+                                            <div className=' flex flex-col md:flex-row md:items-center justify-between gap-2'>
                                                 <p className=' font-semibold text-gray-600'>Quantity: <span className=' text-black'>{item.qty}</span></p>
                                                 <Link href={`/product/${item.id}`} target='_blank'><p className=' font-semibold text-[#5A52E7]'>View Product</p></Link>
                                             </div>
