@@ -17,7 +17,7 @@ const ProductImages:React.FC<PropType> = ({images}) => {
         </div>
         <div className=' flex flex-wrap gap-2 overflow-x-scroll w-full scrollbar-hidden cursor-pointer'>
             {images.map(photo =>(
-                <div key={photo[0]} onClick={()=>{setCurrentImage(photo)}} className=' w-[150px]'>
+                <div key={photo[0]} onClick={()=>{setCurrentImage(photo)}} className=' w-[80px] md:w-[150px]'>
                     <Image src={photo} alt='' width={1000} height={1000} className=' w-full rounded-md' />
                 </div>
             ))}

@@ -11,7 +11,7 @@ const SearchBar = () => {
         e.preventDefault();
 
         if(name){
-            router.push(`/list?name=${name}`)
+            router.push(`/product/name/${name.toLowerCase()}`)
         }
     }
 
