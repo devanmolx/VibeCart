@@ -1,17 +1,17 @@
 "use client"
 import { CartContext } from '@/app/context/Cart/CartContext'
-import React, { useContext } from 'react'
+import React, { Ref, useContext } from 'react'
 import CartItem from '../CartItem'
 import axios from 'axios'
 import { UserContext } from '@/app/context/User/UserContext'
 import useUpdateUser from '@/lib/useUpdateUser'
 import Link from 'next/link'
 
-const CartModel = () => {
+const CartModel = ({cartRef}:{cartRef:Ref<HTMLDivElement>}) => {
 
   const { cart, setCart } = useContext(CartContext)
   const { user } = useContext(UserContext)
-  const updateUser = useUpdateUser(user._id);
+  const updateUser = useUpdateUser();
 
 
   function TotalPrice() {
@@ -32,7 +32,7 @@ const CartModel = () => {
   }
 
   return (
-    <div className=' w-[410px] absolute flex flex-col gap-3 top-12 right-0 p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20 bg-white'>
+    <div ref={cartRef} className=' w-[410px] absolute flex flex-col gap-3 top-12 right-0 p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20 bg-white'>
       <p className=' text-xl font-medium'>Shopping Cart</p>
       {
         !user._id &&

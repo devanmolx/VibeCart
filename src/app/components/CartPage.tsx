@@ -10,7 +10,7 @@ const CartPage = () => {
 
   const { cart, setCart } = useContext(CartContext)
   const { user } = useContext(UserContext);
-  const updateUser = useUpdateUser(user._id);
+  const updateUser = useUpdateUser();
 
   function TotalPrice() {
     let cost = 0;

@@ -1,8 +1,16 @@
+'use client'
+import useUpdateUser from "@/lib/useUpdateUser";
 import Catagories from "./components/Catagories";
 import FeaturedProducts from "./components/FeaturedProducts";
 import Slider from "./components/Slider";
+import { useEffect } from "react";
 
 export default function Home() {
+  const updateUser = useUpdateUser();
+
+  useEffect(() => {
+    updateUser()
+  } , [updateUser])
   return (
     <>
       <Slider />

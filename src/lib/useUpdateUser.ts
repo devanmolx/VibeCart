@@ -2,17 +2,22 @@
 import { useContext, useCallback } from "react";
 import axios from "axios";
 import { UserContext } from "@/app/context/User/UserContext";
+import { useCookies } from "react-cookie";
 
-function useUpdateUser(id:string) {
-    const { user, setUser } = useContext(UserContext);
+function useUpdateUser() {
+    const { setUser } = useContext(UserContext);
+    const [Cookie] = useCookies();
 
     const updateUser = useCallback(async () => {
-        const response = await axios.post("/api/user/me", { id });
-        if(response.data.status){
-            setUser(response.data.message);
+        if (Cookie.token) {
+            const response = await axios.post("/api/user/me", { id:Cookie.token });
+            if (response.data.status) {
+                console.log(response.data.message)
+                setUser(response.data.message);
+            }
+            return response.data.message;
         }
-        return response.data.message;
-    }, [user, setUser]);
+    }, [setUser , Cookie.token]);
 
     return updateUser;
 }

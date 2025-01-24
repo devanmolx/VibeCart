@@ -3,15 +3,16 @@ import React from 'react'
 import Menu from './Menu'
 import SearchBar from './SearchBar'
 import NavbarIcons from './NavbarIcons'
-import { getServerSession } from 'next-auth'
-import authOptions from '@/lib/authOptions'
+import {cookies} from "next/headers"
 
 const Navbar = async () => {
 
-  const session = await getServerSession(authOptions);
+  const cookieStore = await cookies()
+
+  const token = cookieStore.get('token')?.value;
 
   return (
-    <div className='h-20 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 w-screen relative'>
+    <div className=' z-10 h-20 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 w-screen relative'>
       {/* Small Screen */}
       <div className=' md:hidden h-full flex items-center justify-between'>
         <Link href={"/"} className=' text-2xl tracking-wide'>VIBE CART</Link>
@@ -31,7 +32,7 @@ const Navbar = async () => {
         </div>
         <div className=' w-2/3 xl:w-1/2 flex items-center justify-between gap-8'>
           <SearchBar />
-          { <NavbarIcons id={session?.user.id} />}
+          <NavbarIcons id={token} />
         </div>
       </div>
     </div>
