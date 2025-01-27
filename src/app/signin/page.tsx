@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import app from "@/lib/firebase"
-import { useCookies } from 'react-cookie';
+import Cookie from 'js-cookie'
 
 const auth = getAuth(app);
 
@@ -16,7 +16,6 @@ const Page = () => {
     const githubProvider = new GithubAuthProvider();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [Cookie, setCookie] = useCookies();
     
     async function signInGoogle() {
         const response = await signInWithPopup(auth, googleProvider)
@@ -29,7 +28,7 @@ const Page = () => {
         }))
         
         if (res.data.status) {
-            setCookie('token', res.data.message, { path: '/' })
+            Cookie.set("token", res.data.message);
             router.push("/")
         }
         else {
@@ -48,7 +47,7 @@ const Page = () => {
         }))
         
         if (res.data.status) {
-            setCookie('token', res.data.message, { path: '/' })
+            Cookie.set("token", res.data.message);
             router.push("/")
         }
         else {

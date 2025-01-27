@@ -7,7 +7,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { CartContext } from '@/app/context/Cart/CartContext';
 import { UserContext } from '@/app/context/User/UserContext';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
+import Cookie from 'js-cookie';
 
 interface PropType {
     id: string | undefined
@@ -19,7 +19,6 @@ const NavbarIcons: React.FC<PropType> = ({ id }) => {
     const { user, setUser } = useContext(UserContext);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const [Cookie, setCookie, removeCookie] = useCookies();
     
     const profileRef = useRef<HTMLDivElement>(null);
     const cartRef = useRef<HTMLDivElement>(null);
@@ -78,7 +77,7 @@ const NavbarIcons: React.FC<PropType> = ({ id }) => {
             cart: [],
             orders: []
         });
-        removeCookie("token");
+        Cookie.remove("token");
     }
 
     return (
