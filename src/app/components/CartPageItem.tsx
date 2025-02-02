@@ -8,7 +8,7 @@ import axios from 'axios'
 
 interface PropType {
     item: {
-        _id: number
+        _id: string
         name: string;
         description: string;
         price: number;
@@ -23,7 +23,7 @@ const CartPageItem: React.FC<PropType> = ({ item }) => {
     const { user } = useContext(UserContext)
 
     async function removeItemFromCart() {
-        const itemIndex = cart.findIndex(product => product.id === item.id)
+        const itemIndex = cart.findIndex(product => product.product._id === item._id)
         let newCart = [...cart];
 
         if (item.qty > 1) {
@@ -43,7 +43,7 @@ const CartPageItem: React.FC<PropType> = ({ item }) => {
     return (
         <div className=' flex items-center justify-between gap-4 w-full'>
             <div className='  w-[150px] md:w-[250px] rounded-md'>
-                <Link href={`/product/${item.id}`}>
+                <Link href={`/product/${item._id}`}>
                     <Image src={item.images[0]} alt='' height={1000} width={1000} className=' w-full bg-white' />
                 </Link>
             </div>

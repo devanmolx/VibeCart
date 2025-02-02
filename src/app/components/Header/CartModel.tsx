@@ -8,6 +8,12 @@ import axios from 'axios'
 import { orderRoute, transactionRoute } from '@/lib/routeProvider'
 import { useRouter } from 'next/navigation'
 
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
 const CartModel = ({ cartRef }: { cartRef: Ref<HTMLDivElement> }) => {
 
   const { cart, setCart } = useContext(CartContext)
