@@ -1,33 +1,72 @@
 "use client"
 import { CartContext } from '@/app/context/Cart/CartContext'
-import React, { Ref, useContext } from 'react'
+import React, { Ref, useContext, useEffect } from 'react'
 import CartItem from '../CartItem'
-import axios from 'axios'
 import { UserContext } from '@/app/context/User/UserContext'
-import useUpdateUser from '@/lib/useUpdateUser'
 import Link from 'next/link'
+import axios from 'axios'
+import { orderRoute, transactionRoute } from '@/lib/routeProvider'
+import { useRouter } from 'next/navigation'
 
-const CartModel = ({cartRef}:{cartRef:Ref<HTMLDivElement>}) => {
+const CartModel = ({ cartRef }: { cartRef: Ref<HTMLDivElement> }) => {
 
   const { cart, setCart } = useContext(CartContext)
   const { user } = useContext(UserContext)
-  const updateUser = useUpdateUser();
+  const router = useRouter();
+  let amount = 0;
 
-
-  function TotalPrice() {
-    let cost = 0;
+  const TotalPrice = () => {
     for (let i = 0; i < cart.length; i++) {
-      cost += cart[i].qty * cart[i].price;
+      amount += cart[i].product.price * cart[i].qty;
+
     }
-    return cost
+    return amount;
   }
 
-  async function Checkout() {
-    const response = await axios.post("/api/user/order", { cart: JSON.stringify(cart), id: user._id })
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+
+
+  const Checkout = async () => {
+    const response = await axios.post(transactionRoute, { userId: user._id, amount })
     if (response.data.status) {
-      setCart([]);
-      const response = await axios.post("/api/user/cart/clear", { id: user._id })
-      await updateUser();
+      const options = {
+        key: response.data.key,
+        amount: response.data.amount,
+        currency: response.data.currency,
+        name: "VibeCart",
+        order_id: response.data.orderId,
+        handler: async function (response: any) {
+          const razorpay_paymentId = response.razorpay_payment_id
+          const razorpay_orderId = response.razorpay_order_id
+          const razorpay_signature = response.razorpay_signature
+
+
+          const res = await axios.post(orderRoute, {
+            razorpay_orderId,
+            razorpay_paymentId,
+            razorpay_signature,
+            userId: user._id,
+            amount
+          })
+
+          if (res.data.status) {
+            setCart([])
+            router.push("/orders")
+          }
+          else {
+            console.log(res.data.error)
+          }
+
+        },
+      }
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     }
   }
 
@@ -41,8 +80,8 @@ const CartModel = ({cartRef}:{cartRef:Ref<HTMLDivElement>}) => {
         </div>
       }
       <div className=' flex flex-col w-full gap-4'>
-        {cart.map(item => (
-          <CartItem key={item.id} item={item} />
+        {cart && cart.map(item => (
+          <CartItem key={item.product._id} item={item} />
         ))}
       </div>
       <div className=' w-full flex flex-col gap-4'>

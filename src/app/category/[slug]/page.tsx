@@ -2,10 +2,20 @@ import Image from 'next/image'
 import React from 'react'
 import Filter from '../../components/Filter'
 import ProductList from '../../components/ProductList'
-import { products } from "@/lib/Products"
+import axios from 'axios'
+import { allProductsRoute } from '@/lib/routeProvider'
 
-const Page = ({ params }: any) => {
-  const product = products.filter(item => item.category === params.slug);
+interface ProductType{
+  _id: string;
+  name: string;
+  description: string;
+  images:string[]
+  price: number;
+}
+
+const Page = async ({ params }: any) => {
+  const response = await axios.get(`${allProductsRoute}/${params.slug}`)
+  const product:ProductType[] = response.data.products;
 
   return (
     <div className="mt-10 px-4 md:px-8 xl:px-32 2xl:px-64">
@@ -28,9 +38,8 @@ const Page = ({ params }: any) => {
         <Filter />
         <div className='w-full flex flex-col md:flex-row flex-wrap items-center justify-between gap-x-6 gap-y-12'>
           {product.map(item => (
-            <ProductList key={item.id} item={item} />
+            <ProductList key={item._id} item={item} />
           ))}
-          {/* Handle case where product is empty */}
           {product.length === 0 && (
             <p>No products found for {params.slug}</p>
           )}

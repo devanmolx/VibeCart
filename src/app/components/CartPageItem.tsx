@@ -8,7 +8,7 @@ import axios from 'axios'
 
 interface PropType {
     item: {
-        id: number
+        _id: number
         name: string;
         description: string;
         price: number;

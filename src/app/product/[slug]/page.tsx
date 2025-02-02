@@ -1,23 +1,25 @@
 import CustomizeProducts from '@/app/components/CustomizeProducts'
 import ProductImages from '@/app/components/ProductImages'
 import React from 'react'
-import { products } from "@/lib/Products"
+import axios from 'axios'
+import { productsRoute } from '@/lib/routeProvider'
 
-const Page = ({ params }: any) => {
-  const product = products.filter(item => item.id === parseInt(params.slug))
+const Page = async ({ params }: any) => {
+  const response = await axios.get(`${productsRoute}/${params.slug}`);
+  const product = response.data.product
 
   return (
     <div className="  mt-10 px-4 md:px-8 xl:px-32 2xl:px-64 flex flex-col lg:flex-row gap-10">
       <div className=' w-full lg:w-1/2 lg:sticky top-20'>
-        <ProductImages images = {product[0].images} />
+        <ProductImages images = {product.images} />
       </div>
       <div className=' w-full lg:w-1/2 flex flex-col gap-6'>
-        <h1 className=' text-2xl font-semibold'>{product[0].name}</h1>
-        <p className=' text-gray-600'>{product[0].description}</p>
+        <h1 className=' text-2xl font-semibold'>{product.name}</h1>
+        <p className=' text-gray-600'>{product.description}</p>
         <hr />
-        <p className=' text-xl font-semibold text-gray-600 flex items-center gap-4'> <s>₹{product[0].price + 0.20* product[0].price}</s> <span className=' text-2xl font-bold text-black'>₹{product[0].price}</span> </p>
+        <p className=' text-xl font-semibold text-gray-600 flex items-center gap-4'> <s>₹{product.price + 0.20* product.price}</s> <span className=' text-2xl font-bold text-black'>₹{product.price}</span> </p>
         <hr />
-        <CustomizeProducts item={product[0]} />
+        <CustomizeProducts item={product} />
         <div className=' flex flex-col gap-6'>
           <div className=' flex flex-col gap-4'>
             <p className=' text-xl font-medium'>RETURN & REFUND POLICY</p>

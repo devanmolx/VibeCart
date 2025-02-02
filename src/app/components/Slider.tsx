@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const slides = [
     {
-        id: 1,
+        id: "67991822ecd0226fe77431df",
         title: "Spring Sale Collections",
         description: "Sale! Up to 50% off!",
         img: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -14,7 +14,7 @@ const slides = [
         bg: "bg-gradient-to-r from-blue-50 to-yellow-50",
     },
     {
-        id: 2,
+        id: "67991822ecd0226fe77431de",
         title: "Winter Sale Collections",
         description: "Sale! Up to 50% off!",
         img: "https://images.pexels.com/photos/1021693/pexels-photo-1021693.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -22,7 +22,7 @@ const slides = [
         bg: "bg-gradient-to-r from-pink-50 to-blue-50",
     },
     {
-        id: 3,
+        id: "67991822ecd0226fe77431dd",
         title: "Summer Sale Collections",
         description: "Sale! Up to 50% off!",
         img: "https://images.unsplash.com/photo-1567784177951-6fa58317e16b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -34,13 +34,13 @@ const slides = [
 const Slider = () => {
     const [current, setCurrent] = useState(0);
 
-      useEffect(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
-          setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+            setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
         }, 3000);
 
         return () => clearInterval(interval);
-      }, [current]);
+    }, [current]);
 
     return (
         <div className="h-[calc(100vh-80px)] overflow-hidden">
@@ -60,7 +60,7 @@ const Slider = () => {
                             <h1 className="text-5xl lg:text-6xl 2xl:text-8xl font-semibold">
                                 {slide.title}
                             </h1>
-                            <Link href={slide.url}>
+                            <Link href={`/category/${slide.id}`}>
                                 <button className="rounded-md bg-black text-white py-3 px-4 ">
                                     SHOP NOW
                                 </button>

@@ -2,9 +2,9 @@
 import React, { useState } from 'react'
 import AddToCart from './AddToCart';
 
-interface PropType{
+interface PropType {
     item: {
-        id: number,
+        _id: string,
         name: string,
         description: string,
         price: number,
@@ -12,7 +12,7 @@ interface PropType{
     }
 }
 
-const CustomizeProducts:React.FC<PropType>= ({item}) => {
+const CustomizeProducts: React.FC<PropType> = ({ item }) => {
 
     const [Quantity, setQuantity] = useState(1);
 
@@ -35,7 +35,7 @@ const CustomizeProducts:React.FC<PropType>= ({item}) => {
                         {Quantity}
                         <button onClick={increaseQty}>+</button>
                     </div>
-                    <AddToCart item={item} qty={Quantity}  />
+                    <AddToCart item={item} qty={Quantity} />
                 </div>
             </div>
         </div>

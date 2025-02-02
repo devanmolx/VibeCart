@@ -6,43 +6,26 @@ import { IoCart } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 import { CartContext } from '@/app/context/Cart/CartContext';
 import { UserContext } from '@/app/context/User/UserContext';
-import axios from 'axios';
 import Cookie from 'js-cookie';
 
-interface PropType {
-    id: string | undefined
-}
+const NavbarIcons = () => {
 
-const NavbarIcons: React.FC<PropType> = ({ id }) => {
-
-    const { cart, setCart } = useContext(CartContext)
+    const { cart } = useContext(CartContext)
     const { user, setUser } = useContext(UserContext);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
-    
+
     const profileRef = useRef<HTMLDivElement>(null);
     const cartRef = useRef<HTMLDivElement>(null);
 
-
-    useEffect(() => {
-        if (id) {
-            fetchCart();
-        }
-    }, [])
 
     function handleProfile() {
         setIsProfileOpen(prev => !prev);
     }
 
-    async function fetchCart() {
-        const response = await axios.post("/api/user/cart/get", { id })
-        if (response.data.status) {
-            setCart(response.data.message)
-        }
-    }
-
     function TotalQty() {
         let qty = 0;
+
         for (let i = 0; i < cart.length; i++) {
             qty += cart[i].qty;
         }
@@ -84,7 +67,7 @@ const NavbarIcons: React.FC<PropType> = ({ id }) => {
         <div className='flex items-center gap-3 relative'>
             <button className=' cursor-pointer' onClick={handleProfile}>
                 {
-                    user._id ? <FaUserCircle className=' text-3xl' /> : <Link href={"/signin"}><FaUserCircle className=' text-3xl' /></Link>
+                    user && user._id ? <FaUserCircle className=' text-3xl' /> : <Link href={"/signin"}><FaUserCircle className=' text-3xl' /></Link>
                 }
             </button>
             <div ref={profileRef}>

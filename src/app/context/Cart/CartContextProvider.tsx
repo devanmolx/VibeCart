@@ -1,19 +1,10 @@
 "use client"
 import React, { useState } from 'react'
-import { CartContext } from './CartContext';
-
-interface CartType {
-    id:number
-    name: string;
-    description: string;
-    price: number;
-    qty:number
-    images: string[];
-}
+import { CartContext, CartType } from './CartContext';
 
 const CartContextProvider = ({children}:any) => {
     
-    const [cart , setCart] = useState<CartType[]>([]);
+  const [cart , setCart] = useState<CartType[]>([]);
 
   return (
     <CartContext.Provider value={{cart , setCart}}>

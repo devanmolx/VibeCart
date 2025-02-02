@@ -5,7 +5,7 @@ import AddToCart from './AddToCart'
 
 interface PropType {
   item: {
-    id: number,
+    _id: string,
     name: string,
     description: string,
     price: number,
@@ -16,8 +16,8 @@ interface PropType {
 const ProductList: React.FC<PropType> = ({ item }) => {
 
   return (
-    <div className=' flex flex-col gap-2'>
-      <Link href={`/product/${item.id}`} className=' flex flex-col gap-2 w-[300px]'>
+    <div className=' flex flex-col gap-2 z-0'>
+      <Link href={`/product/${item._id}`} className=' flex flex-col gap-2 w-[300px]'>
         <div className=" relative overflow-hidden w-full h-[350px] flex items-center justify-center">
           <Image className="rounded-md w-full absolute z-10 hover:opacity-0 transition-opacity easy du" src={item.images[0]} height={1000} width={1000} alt="" />
           <Image className="rounded-md w-full" src={item.images[1]} height={1000} width={1000} alt="" />

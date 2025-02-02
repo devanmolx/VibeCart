@@ -1,49 +1,64 @@
 "use client"
 import React, { useContext } from 'react'
-import { CartContext } from '../context/Cart/CartContext'
+import { CartContext, CartType } from '../context/Cart/CartContext'
 import axios from 'axios'
 import { UserContext } from '../context/User/UserContext'
+import { addToCartRoute, getCartRoute } from '@/lib/routeProvider'
 
 interface PropType {
     item: {
-        id: number,
+        _id: string,
         name: string,
         description: string,
         price: number,
         images: string[]
     },
-    qty:number
+    qty: number
 }
 
-const AddToCart: React.FC<PropType> = ({ item , qty }) => {
+const AddToCart: React.FC<PropType> = ({ item, qty }) => {
 
-    const {cart ,setCart} = useContext(CartContext)
-    const {user} = useContext(UserContext)
+    const { cart, setCart } = useContext(CartContext)
+    const { user } = useContext(UserContext)
 
     async function addItemToCart() {
 
-        const itemIndex = cart.findIndex(product => product.id === item.id)
-        let newCart;
-        
-        if(itemIndex  === -1){
-            const addItem = {
-                id:item.id,
-                name:item.name,
-                description:item.description,
-                price:item.price,
-                qty:qty,
-                images:item.images
-            }
-            newCart = [...cart , addItem];
+        const newItems = {
+            product: item._id,
+            qty
         }
-        else{
-            newCart = cart.map((item , index) => 
-            index === itemIndex ? { ...item , qty: item.qty + qty} : item)
+        if (cart) {
+            const index = cart.findIndex((cartItem) => cartItem.product._id === item._id)
+            let updatedCart = [...cart];
+            if (index === -1) {
+                const newCartItem: CartType = {
+                    product: {
+                        _id: item._id,
+                        name: item.name,
+                        description: item.description,
+                        price: item.price,
+                        images: item.images
+                    },
+                    qty
+                }
+
+                setCart([...updatedCart, newCartItem])
+
+            }
+            else {
+
+                const updatedCart = [...cart];
+                updatedCart[index].qty += qty;
+                setCart(updatedCart);
+
+            }
+
         }
 
-        setCart(newCart)
-        if(user._id){
-            const response = await axios.post("/api/user/cart/update" , {item:JSON.stringify(newCart) , id:user._id});
+        if (user._id) {
+            const res = await axios.post(addToCartRoute, { userId: user._id, newItems })
+            const response = await axios.post(getCartRoute, { userId: user._id })
+            setCart(response.data.cart);
         }
     }
 

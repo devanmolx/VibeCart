@@ -1,12 +1,14 @@
 'use client'
 import Image from 'next/image'
 import React, { useContext, useState } from 'react'
-import { getAuth, signInWithPopup, GoogleAuthProvider , GithubAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import app from "@/lib/firebase"
 import Cookie from 'js-cookie'
+import { signinRoute } from '@/lib/routeProvider';
+import { UserContext } from '../context/User/UserContext';
 
 const auth = getAuth(app);
 
@@ -14,40 +16,42 @@ const Page = () => {
 
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
+    const { setUser } = useContext(UserContext)
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    
+
     async function signInGoogle() {
         const response = await signInWithPopup(auth, googleProvider)
-        
+
         setIsLoading(true)
-        const res = await axios.post("/api/user/signin", JSON.stringify({
+        const res = await axios.post(signinRoute, {
             name: response.user.displayName,
             email: response.user.email,
             imageUrl: response.user.photoURL
-        }))
-        
+        })
+
         if (res.data.status) {
-            Cookie.set("token", res.data.message);
+            setUser(res.data.user)
+            Cookie.set("token", res.data.token);
             router.push("/")
         }
         else {
             toast.error(res.data.error)
         }
     }
-    
+
     async function signInGithub() {
         const response = await signInWithPopup(auth, githubProvider)
-        
+
         setIsLoading(true);
-        const res = await axios.post("/api/user/signin", JSON.stringify({
+        const res = await axios.post(signinRoute, {
             name: response.user.displayName,
             email: response.user.email,
             imageUrl: response.user.photoURL
-        }))
-        
+        })
+
         if (res.data.status) {
-            Cookie.set("token", res.data.message);
+            Cookie.set("token", res.data.token);
             router.push("/")
         }
         else {

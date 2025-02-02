@@ -1,12 +1,14 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 
-interface CartType {
-    id:number
-    name: string;
-    description: string;
-    price: number;
+export interface CartType {
+    product: {
+        _id: string
+        name: string;
+        description: string;
+        price: number;
+        images: string[];
+    }
     qty:number
-    images: string[];
 }
 
 interface CartContextType {

@@ -1,26 +1,24 @@
-'use client'
-import useUpdateUser from "@/lib/useUpdateUser";
 import Catagories from "./components/Catagories";
 import FeaturedProducts from "./components/FeaturedProducts";
 import Slider from "./components/Slider";
-import { useEffect } from "react";
+import axios from "axios";
+import { allCategoriesRoute, getFeaturedProductsRoute } from "@/lib/routeProvider";
 
-export default function Home() {
-  const updateUser = useUpdateUser();
+export default async function Home() {
 
-  useEffect(() => {
-    updateUser()
-  } , [updateUser])
+  const categoriesRes = await axios.get(allCategoriesRoute)
+  const productsRes = await axios.get(getFeaturedProductsRoute);
+
   return (
     <>
       <Slider />
       <div className="  mt-10 px-4 md:px-8 xl:px-32 2xl:px-64">
         <h1 className=" text-2xl font-semibold my-4">Featured Products</h1>
-        <FeaturedProducts />
+        <FeaturedProducts products={productsRes.data.products} />
       </div>
       <div className="  mt-16 px-4 md:px-8 xl:px-32 2xl:px-64">
         <h1 className=" text-2xl font-semibold my-4">Categories</h1>
-        <Catagories />
+        <Catagories categories={categoriesRes.data.categories} />
       </div>
     </>
   );

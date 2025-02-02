@@ -3,14 +3,8 @@ import React from 'react'
 import Menu from './Menu'
 import SearchBar from './SearchBar'
 import NavbarIcons from './NavbarIcons'
-import {cookies} from "next/headers"
 
-const Navbar = async () => {
-
-  const cookieStore = await cookies()
-
-  const token = cookieStore.get('token')?.value;
-
+const Navbar = () => {
   return (
     <div className=' z-10 h-20 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 w-screen relative'>
       {/* Small Screen */}
@@ -32,7 +26,7 @@ const Navbar = async () => {
         </div>
         <div className=' w-2/3 xl:w-1/2 flex items-center justify-between gap-8'>
           <SearchBar />
-          <NavbarIcons id={token} />
+          <NavbarIcons />
         </div>
       </div>
     </div>

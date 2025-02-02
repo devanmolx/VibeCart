@@ -5,6 +5,7 @@ import Navbar from "./components/Header/Navbar";
 import Footer from "./components/Footer";
 import UserContextProvider from "./context/User/UserContextProvider";
 import CartContextProvider from "./context/Cart/CartContextProvider";
+import UpdateUserDetails from "./components/UpdateUserDetails";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,13 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen w-screen overflow-x-hidden scrollbar-hidden flex flex-col`}>
+        <CartContextProvider>
           <UserContextProvider>
-            <CartContextProvider>
-              <Navbar />
-              {children}
-              <Footer />
-            </CartContextProvider>
+            <UpdateUserDetails />
+            <Navbar />
+            {children}
+            <Footer />
           </UserContextProvider>
+        </CartContextProvider>
       </body>
     </html>
   );
