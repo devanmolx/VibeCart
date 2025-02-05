@@ -1,4 +1,4 @@
-const BaseUrl = 'http://15.206.31.157:4000'
+const BaseUrl = 'https://vibezone-backend.vercel.app'
 
 export const userRoute = `${BaseUrl}/user/me`
 export const signinRoute = `${BaseUrl}/user/signin`
