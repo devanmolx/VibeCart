@@ -9,6 +9,8 @@ import app from "@/lib/firebase"
 import Cookie from 'js-cookie'
 import { signinRoute } from '@/lib/routeProvider';
 import { UserContext } from '../context/User/UserContext';
+import { LoadingContext } from '../context/Loading/loadingContext';
+import Loading from '../loading';
 
 const auth = getAuth(app);
 
@@ -17,8 +19,8 @@ const Page = () => {
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
     const { setUser } = useContext(UserContext)
+    const { isLoading, setIsLoading } = useContext(LoadingContext)
     const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
 
     async function signInGoogle() {
         const response = await signInWithPopup(auth, googleProvider)
@@ -60,11 +62,8 @@ const Page = () => {
     }
 
     if (isLoading) {
-        return (
-            <div>
-                Loading...
-            </div>
-        )
+        <Loading />
+
     }
 
     return (

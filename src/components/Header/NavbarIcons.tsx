@@ -82,7 +82,7 @@ const NavbarIcons = () => {
                 <IoCart className=' text-3xl' />
                 <div className='-right-0 h-6 w-6 -top-0 rounded-full bg-pink text-white'>{TotalQty()}</div>
             </button>
-            {isCartOpen && <CartModel cartRef={cartRef} />}
+            {isCartOpen && <CartModel cartRef={cartRef} setIsCartOpen={setIsCartOpen} />}
         </div>
     )
 }

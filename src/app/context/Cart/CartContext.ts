@@ -1,14 +1,16 @@
 import { createContext } from 'react';
 
+export interface ProductType {
+    _id: string
+    name: string;
+    description: string;
+    price: number;
+    images: string[];
+}
+
 export interface CartType {
-    product: {
-        _id: string
-        name: string;
-        description: string;
-        price: number;
-        images: string[];
-    }
-    qty:number
+    product: ProductType
+    qty: number
 }
 
 interface CartContextType {
@@ -18,7 +20,7 @@ interface CartContextType {
 
 const defaultCartContextValue: CartContextType = {
     cart: [],
-    setCart: () => {}
+    setCart: () => { }
 };
 
 export const CartContext = createContext<CartContextType>(defaultCartContextValue);

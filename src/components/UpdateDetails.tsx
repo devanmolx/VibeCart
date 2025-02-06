@@ -1,7 +1,7 @@
 "use client"
 import React, { useContext, useEffect } from 'react'
-import { UserContext, UserType } from '../context/User/UserContext'
-import { CartContext, CartType } from '../context/Cart/CartContext';
+import { UserContext, UserType } from '@/app/context/User/UserContext'
+import { CartContext, CartType } from '@/app/context/Cart/CartContext';
 
 interface PropType {
     user: UserType

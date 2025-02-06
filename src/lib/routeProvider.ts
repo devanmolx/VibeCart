@@ -2,6 +2,7 @@ const BaseUrl = 'https://vibezone-backend.vercel.app'
 
 export const userRoute = `${BaseUrl}/user/me`
 export const signinRoute = `${BaseUrl}/user/signin`
+export const searchProductsRoute = `${BaseUrl}/products/search`
 export const allCategoriesRoute = `${BaseUrl}/categories`
 export const allProductsRoute = `${BaseUrl}/products/category`
 export const getFeaturedProductsRoute = `${BaseUrl}/products/featured`

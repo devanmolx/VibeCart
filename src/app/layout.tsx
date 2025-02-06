@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Header/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "@/components/Header/Navbar";
+import Footer from "@/components/Footer";
 import UserContextProvider from "./context/User/UserContextProvider";
 import CartContextProvider from "./context/Cart/CartContextProvider";
-import UpdateUserDetails from "./components/UpdateUserDetails";
+import UpdateUserDetails from "@/components/UpdateUserDetails";
+import LoadingContextProvider from "./context/Loading/LoadingContextProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,14 +23,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen w-screen overflow-x-hidden scrollbar-hidden flex flex-col`}>
-        <CartContextProvider>
-          <UserContextProvider>
-            <UpdateUserDetails />
-            <Navbar />
-            {children}
-            <Footer />
-          </UserContextProvider>
-        </CartContextProvider>
+        <LoadingContextProvider>
+          <CartContextProvider>
+            <UserContextProvider>
+              <UpdateUserDetails />
+              <Navbar />
+              {children}
+              <Footer />
+            </UserContextProvider>
+          </CartContextProvider>
+        </LoadingContextProvider>
       </body>
     </html>
   );

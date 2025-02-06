@@ -1,12 +1,14 @@
 "use client"
 import { CartContext } from '@/app/context/Cart/CartContext'
-import React, { Ref, useContext, useEffect } from 'react'
+import React, { Ref, useContext } from 'react'
 import CartItem from '../CartItem'
 import { UserContext } from '@/app/context/User/UserContext'
 import Link from 'next/link'
 import axios from 'axios'
 import { orderRoute, transactionRoute } from '@/lib/routeProvider'
 import { useRouter } from 'next/navigation'
+import { LoadingContext } from '@/app/context/Loading/loadingContext'
+import Loading from '@/app/loading'
 
 declare global {
   interface Window {
@@ -14,10 +16,11 @@ declare global {
   }
 }
 
-const CartModel = ({ cartRef }: { cartRef: Ref<HTMLDivElement> }) => {
+const CartModel = ({ cartRef, setIsCartOpen }: { cartRef: Ref<HTMLDivElement>, setIsCartOpen: (isCartOpen: boolean) => void }) => {
 
   const { cart, setCart } = useContext(CartContext)
   const { user } = useContext(UserContext)
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
   const router = useRouter();
   let amount = 0;
 
@@ -29,16 +32,8 @@ const CartModel = ({ cartRef }: { cartRef: Ref<HTMLDivElement> }) => {
     return amount;
   }
 
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-
-
-
   const Checkout = async () => {
+    setIsLoading(true);
     const response = await axios.post(transactionRoute, { userId: user._id, amount })
     if (response.data.status) {
       const options = {
@@ -68,12 +63,24 @@ const CartModel = ({ cartRef }: { cartRef: Ref<HTMLDivElement> }) => {
           else {
             console.log(res.data.error)
           }
-
+          setIsLoading(false);
+          setIsCartOpen(false);
         },
+        modal: {
+          ondismiss: function () {
+            setIsLoading(false);
+          }
+        }
       }
       const rzp = new window.Razorpay(options);
       rzp.open();
     }
+  }
+
+  if (isLoading) {
+    return (
+      <Loading />
+    )
   }
 
   return (
@@ -95,8 +102,7 @@ const CartModel = ({ cartRef }: { cartRef: Ref<HTMLDivElement> }) => {
           <p className=' text-xl font-medium'>Subtotal</p>
           <p className=' text-xl font-semibold'>₹{TotalPrice()}</p>
         </div>
-        <div className=' w-full flex items-center justify-between'>
-          <Link href={"/cart"}><button className='font-medium p-3 rounded-md border border-gray-400'>View cart</button></Link>
+        <div className=' w-full flex items-center justify-end'>
           <button onClick={() => { Checkout() }} disabled={user._id && cart.length >= 1 ? false : true} className='font-medium p-3 rounded-md text-white bg-black disabled:bg-gray-700 disabled:cursor-not-allowed'>Check out</button>
         </div>
       </div>

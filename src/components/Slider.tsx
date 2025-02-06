@@ -1,12 +1,11 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const slides = [
     {
-        id: "67991822ecd0226fe77431df",
+        id: "679fa6926369f8b4e85f3340",
         title: "Spring Sale Collections",
         description: "Sale! Up to 50% off!",
         img: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -14,7 +13,7 @@ const slides = [
         bg: "bg-gradient-to-r from-blue-50 to-yellow-50",
     },
     {
-        id: "67991822ecd0226fe77431de",
+        id: "679fa6926369f8b4e85f333f",
         title: "Winter Sale Collections",
         description: "Sale! Up to 50% off!",
         img: "https://images.pexels.com/photos/1021693/pexels-photo-1021693.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -22,7 +21,7 @@ const slides = [
         bg: "bg-gradient-to-r from-pink-50 to-blue-50",
     },
     {
-        id: "67991822ecd0226fe77431dd",
+        id: "679fa6926369f8b4e85f333e",
         title: "Summer Sale Collections",
         description: "Sale! Up to 50% off!",
         img: "https://images.unsplash.com/photo-1567784177951-6fa58317e16b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -33,6 +32,13 @@ const slides = [
 
 const Slider = () => {
     const [current, setCurrent] = useState(0);
+
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.async = true;
+        document.body.appendChild(script);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {

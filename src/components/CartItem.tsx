@@ -2,8 +2,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useContext } from 'react'
-import { CartContext, CartType } from '../context/Cart/CartContext'
-import { UserContext } from '../context/User/UserContext'
+import { CartContext, CartType } from '@/app/context/Cart/CartContext'
+import { UserContext } from '@/app/context/User/UserContext'
 import axios from 'axios'
 import { removeFromCartRoute } from '@/lib/routeProvider'
 

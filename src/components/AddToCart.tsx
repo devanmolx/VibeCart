@@ -1,9 +1,9 @@
 "use client"
 import React, { useContext } from 'react'
-import { CartContext, CartType } from '../context/Cart/CartContext'
+import { CartContext, CartType } from '@/app/context/Cart/CartContext'
 import axios from 'axios'
-import { UserContext } from '../context/User/UserContext'
-import { addToCartRoute, getCartRoute } from '@/lib/routeProvider'
+import { UserContext } from '@/app/context/User/UserContext'
+import { addToCartRoute } from '@/lib/routeProvider'
 
 interface PropType {
     item: {
@@ -50,15 +50,12 @@ const AddToCart: React.FC<PropType> = ({ item, qty }) => {
                 const updatedCart = [...cart];
                 updatedCart[index].qty += qty;
                 setCart(updatedCart);
-
             }
 
         }
 
         if (user._id) {
-            const res = await axios.post(addToCartRoute, { userId: user._id, newItems })
-            const response = await axios.post(getCartRoute, { userId: user._id })
-            setCart(response.data.cart);
+            await axios.post(addToCartRoute, { userId: user._id, newItems })
         }
     }
 

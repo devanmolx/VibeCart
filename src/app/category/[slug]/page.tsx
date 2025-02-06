@@ -1,21 +1,21 @@
 import Image from 'next/image'
 import React from 'react'
-import Filter from '../../components/Filter'
-import ProductList from '../../components/ProductList'
 import axios from 'axios'
 import { allProductsRoute } from '@/lib/routeProvider'
+import Filter from '@/components/Filter';
+import ProductList from '@/components/ProductList';
 
-interface ProductType{
+interface ProductType {
   _id: string;
   name: string;
   description: string;
-  images:string[]
+  images: string[]
   price: number;
 }
 
 const Page = async ({ params }: any) => {
   const response = await axios.get(`${allProductsRoute}/${params.slug}`)
-  const product:ProductType[] = response.data.products;
+  const product: ProductType[] = response.data.products;
 
   return (
     <div className="mt-10 px-4 md:px-8 xl:px-32 2xl:px-64">

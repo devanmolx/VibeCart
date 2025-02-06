@@ -1,6 +1,6 @@
-import Catagories from "./components/Catagories";
-import FeaturedProducts from "./components/FeaturedProducts";
-import Slider from "./components/Slider";
+import Catagories from "@/components/Catagories";
+import FeaturedProducts from "@/components/FeaturedProducts";
+import Slider from "@/components/Slider";
 import axios from "axios";
 import { allCategoriesRoute, getFeaturedProductsRoute } from "@/lib/routeProvider";
 

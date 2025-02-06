@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { cookies } from "next/headers"
-import { UserContext } from '../context/User/UserContext'
 import Image from 'next/image';
 import Link from 'next/link';
 import axios from 'axios';
