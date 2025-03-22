@@ -1,13 +1,12 @@
 "use client"
 import { CartContext } from '@/app/context/Cart/CartContext'
-import React, { Ref, useContext } from 'react'
+import React, { Ref, useContext, useState } from 'react'
 import CartItem from '../CartItem'
 import { UserContext } from '@/app/context/User/UserContext'
 import Link from 'next/link'
 import axios from 'axios'
 import { orderRoute, transactionRoute } from '@/lib/routeProvider'
 import { useRouter } from 'next/navigation'
-import { LoadingContext } from '@/app/context/Loading/loadingContext'
 import Loading from '@/app/loading'
 
 declare global {
@@ -20,7 +19,7 @@ const CartModel = ({ cartRef, setIsCartOpen }: { cartRef: Ref<HTMLDivElement>, s
 
   const { cart, setCart } = useContext(CartContext)
   const { user } = useContext(UserContext)
-  const { isLoading, setIsLoading } = useContext(LoadingContext);
+  const [ isLoading, setIsLoading ] = useState(false);
   const router = useRouter();
   let amount = 0;
 

@@ -26,7 +26,6 @@ export default function RootLayout({
         <LoadingContextProvider>
           <CartContextProvider>
             <UserContextProvider>
-              <UpdateUserDetails />
               <Navbar />
               {children}
               <Footer />
