@@ -83,7 +83,7 @@ const CartModel = ({ cartRef, setIsCartOpen }: { cartRef: Ref<HTMLDivElement>, s
   }
 
   return (
-    <div ref={cartRef} className=' md:w-[410px] absolute flex flex-col gap-3 top-12 right-0 p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20 bg-white'>
+    <div ref={cartRef} className=' w-[200px] sm:w-[300px] md:w-[400px] absolute flex flex-col gap-3 top-12 right-0 p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20 bg-white'>
       <p className=' text-xl font-medium'>Shopping Cart</p>
       {
         !user._id &&
