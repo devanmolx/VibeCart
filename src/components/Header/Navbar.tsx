@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import React from 'react'
-import Menu from './Menu'
 import SearchBar from './SearchBar'
 import NavbarIcons from './NavbarIcons'
 
@@ -10,7 +9,7 @@ const Navbar = () => {
       {/* Small Screen */}
       <div className=' md:hidden h-full flex items-center justify-between'>
         <Link href={"/"} className=' text-2xl tracking-wide'>VIBE CART</Link>
-        <Menu />
+        <NavbarIcons />
       </div>
       {/* Medium Screen */}
       <div className='hidden h-full w-full md:flex items-center justify-between'>

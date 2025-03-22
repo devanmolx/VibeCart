@@ -84,7 +84,7 @@ const CartModel = ({ cartRef, setIsCartOpen }: { cartRef: Ref<HTMLDivElement>, s
   }
 
   return (
-    <div ref={cartRef} className=' w-[410px] absolute flex flex-col gap-3 top-12 right-0 p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20 bg-white'>
+    <div ref={cartRef} className=' md:w-[410px] absolute flex flex-col gap-3 top-12 right-0 p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20 bg-white'>
       <p className=' text-xl font-medium'>Shopping Cart</p>
       {
         !user._id &&
@@ -98,7 +98,7 @@ const CartModel = ({ cartRef, setIsCartOpen }: { cartRef: Ref<HTMLDivElement>, s
         ))}
       </div>
       <div className=' w-full flex flex-col gap-4'>
-        <div className=' w-full flex items-center justify-between'>
+        <div className=' w-full flex items-center justify-between gap-4'>
           <p className=' text-xl font-medium'>Subtotal</p>
           <p className=' text-xl font-semibold'>₹{TotalPrice()}</p>
         </div>

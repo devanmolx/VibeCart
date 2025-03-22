@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
@@ -23,9 +23,9 @@ const Page = () => {
     const router = useRouter();
 
     async function signInGoogle() {
+        setIsLoading(true)
         const response = await signInWithPopup(auth, googleProvider)
 
-        setIsLoading(true)
         const res = await axios.post(signinRoute, {
             name: response.user.displayName,
             email: response.user.email,
@@ -38,14 +38,15 @@ const Page = () => {
             router.push("/")
         }
         else {
+            setIsLoading(false);
             toast.error(res.data.error)
         }
     }
 
     async function signInGithub() {
+        setIsLoading(true);
         const response = await signInWithPopup(auth, githubProvider)
 
-        setIsLoading(true);
         const res = await axios.post(signinRoute, {
             name: response.user.displayName,
             email: response.user.email,
@@ -57,13 +58,13 @@ const Page = () => {
             router.push("/")
         }
         else {
+            setIsLoading(false);
             toast.error(res.data.error)
         }
     }
 
     if (isLoading) {
         <Loading />
-
     }
 
     return (

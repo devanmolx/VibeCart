@@ -34,7 +34,7 @@ const CartItem = ({ item }: { item: CartType }) => {
   }
 
   return (
-    <div className=' flex items-center justify-between gap-2 w-full z-10'>
+    <div className=' flex items-center justify-between gap-4 w-full z-10'>
       <div className=' h-[90px] w-[100px] rounded-md'>
         <Link href={`/product/${item.product._id}`}>
           <Image src={item.product.images[0]} alt='' height={1000} width={1000} className=' w-full bg-white' />
@@ -42,7 +42,7 @@ const CartItem = ({ item }: { item: CartType }) => {
       </div>
       <div className=' flex flex-col h-full gap-4 w-full'>
         <div className=' flex flex-col w-full justify-between'>
-          <div className='w-full flex items-center justify-between'>
+          <div className='w-full flex items-center justify-between gap-4'>
             <p className=' font-semibold'>{item.product.name}</p>
             <p>₹{item.product.price}</p>
           </div>
