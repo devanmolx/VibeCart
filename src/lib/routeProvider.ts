@@ -1,4 +1,4 @@
-const BaseUrl = 'https://vibezone-backend.vercel.app'
+const BaseUrl = process.env.NEXT_PUBLIC_BACKEND_ROUTE
 
 export const userRoute = `${BaseUrl}/user/me`
 export const signinRoute = `${BaseUrl}/user/signin`
