@@ -1,4 +1,4 @@
-const BaseUrl = process.env.NEXT_PUBLIC_BACKEND_ROUTE
+const BaseUrl = 'https://vibecart-backend.anmolgarg.tech'
 
 export const userRoute = `${BaseUrl}/user/me`
 export const signinRoute = `${BaseUrl}/user/signin`
