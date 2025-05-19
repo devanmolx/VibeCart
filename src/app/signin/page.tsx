@@ -64,7 +64,9 @@ const Page = () => {
     }
 
     if (isLoading) {
-        <Loading />
+        return (
+            <Loading />
+        )
     }
 
     return (
